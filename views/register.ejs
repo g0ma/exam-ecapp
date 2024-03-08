@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>会員登録</title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="row flex-wrap py-3 mb-4 border-bottom">
+            <div class="col-md-3 text-first">
+                <h3>あいうえお</h3>
+            </div>
+        </header>
+        <a href="/">戻る</a>
+        <h1>アカウントを作成</h1>
+        <form action="/signup" method="post">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label class="form-label">名前</label>
+                        </td>
+                        <td class="row">
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" name="user-endname" placeholder="例：山川" id="" />
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" name="user-firstname" placeholder="例：一太郎"
+                                    id="" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-label">E-Mail</label>
+                        </td>
+                        <td class="row">
+                            <div class="col-md-6">
+                                <input class="form-control" type="email" name="email"
+                                    placeholder="yamakawa-ichitaro@example.com" id="" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-label">パスワード</label>
+                        </td>
+                        <td class="row">
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" name="" id="">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-label">パスワード（確認）</label>
+                        </td>
+                        <td class="row">
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" name="" id="">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-label">郵便番号</label>
+                        </td>
+                        <td class="row">
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" name="" placeholder="151-0053" id="">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="form-label">住所</label>
+                        </td>
+                        <td class="row">
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" name=""
+                                    placeholder="東京都渋谷区代々木1丁目2-3 ヤマカワセントラルビルディング1F" id="">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <td><button class="btn btn-outline-primary" type="submit">登録する</button></td>
+            <div class="row">
+            </div>
+
+    </div>
+    </form>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
