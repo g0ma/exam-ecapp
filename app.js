@@ -8,7 +8,6 @@ var logger = require('morgan');
 // routerをここへまとめておく
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');
-var usersRouter = require('./routes/users');
 // 追加したrouter
 var loginRouter = require('./routes/login');
 var registerRouter= require('./routes/register');
@@ -31,7 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ロード処理をここへまとめる
 app.use('/', indexRouter);
 app.use('/products', productsRouter);
-app.use('/users', usersRouter);
 // 追記した処理
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);

@@ -75,7 +75,6 @@ router.post('/product-manage/add', upload.single('image'), (req, res) => {
         }
     });
     con.end();
-    // res.render('product-manage', '');
     res.writeHead(301, { Location: '/admin/product-manage' });
     res.end();
 

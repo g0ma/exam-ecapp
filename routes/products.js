@@ -9,7 +9,6 @@ const env = process.env;
 // MySQLの接続情報
 function Select_Db() {
     const connection = mysql.createConnection({
-        // todo: ハードコードやめる
         host: env.DB_HOST,
         user: env.DB_USER,
         password: env.DB_PASSWORD,

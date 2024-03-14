@@ -18,7 +18,7 @@
         </header>
         <a href="/">戻る</a>
         <h1>アカウントを作成</h1>
-        <form action="/signup" method="post">
+        <form action="/register" method="post">
             <table class="table">
                 <tbody>
                     <tr>
@@ -26,12 +26,8 @@
                             <label class="form-label">名前</label>
                         </td>
                         <td class="row">
-                            <div class="col-md-3">
-                                <input class="form-control" type="text" name="user-endname" placeholder="例：山川" id="" />
-                            </div>
-                            <div class="col-md-3">
-                                <input class="form-control" type="text" name="user-firstname" placeholder="例：一太郎"
-                                    id="" />
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="username" placeholder="例：山川" id="" />
                             </div>
                         </td>
                     </tr>
@@ -52,7 +48,7 @@
                         </td>
                         <td class="row">
                             <div class="col-md-3">
-                                <input class="form-control" type="text" name="" id="">
+                                <input class="form-control" type="password" name="passwd" id="">
                             </div>
                         </td>
                     </tr>
@@ -62,7 +58,7 @@
                         </td>
                         <td class="row">
                             <div class="col-md-3">
-                                <input class="form-control" type="text" name="" id="">
+                                <input class="form-control" type="password" name="passwd-chk" id="">
                             </div>
                         </td>
                     </tr>
@@ -72,7 +68,7 @@
                         </td>
                         <td class="row">
                             <div class="col-md-3">
-                                <input class="form-control" type="text" name="" placeholder="151-0053" id="">
+                                <input class="form-control" type="text" name="zipCode" placeholder="151-0053" id="">
                             </div>
                         </td>
                     </tr>
@@ -82,7 +78,7 @@
                         </td>
                         <td class="row">
                             <div class="col-md-8">
-                                <input class="form-control" type="text" name=""
+                                <input class="form-control" type="text" name="address"
                                     placeholder="東京都渋谷区代々木1丁目2-3 ヤマカワセントラルビルディング1F" id="">
                             </div>
                         </td>
