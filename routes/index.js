@@ -1,38 +1,20 @@
 var express = require('express');
-const mysql = require('mysql2');
+var chkAuth = require('../checkAuth');
+var dbCon = require('../DBConInfo');
 var router = express.Router();
 
-// MySQLから商品一覧を取得する接続
-
-// 環境情報の読み込み
-require('dotenv').config();
-const env = process.env;
-
-// MySQLの接続情報
-function Select_Db() {
-    const connection = mysql.createConnection({
-        // todo: ハードコードやめる
-        host: env.DB_HOST,
-        user: env.DB_USER,
-        password: env.DB_PASSWORD,
-        database: env.DB_DATABASE
-    });
-    return connection;
-}
-
 router.get('/', function (req, res, next) {
-  var con = Select_Db();
+  const loginUser = chkAuth.LoginChk(req.cookies.token);
+  var con = dbCon.Select_Db();
   const sql = 'SELECT * FROM products;';
   con.query(sql, (err, results) => {
     if (err) {
-      console.log('DB ACCESS ERROR');
-      return;
+      return res.status(401).send('DBエラー');;
     }
     var items = {
-      title: 'こんにちは！',
+      title: 'こんにちは！' + loginUser.name + 'さん',
       content: results
     }
-    con.end();
 
     res.render('index', items);
   });

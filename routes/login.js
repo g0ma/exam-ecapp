@@ -16,7 +16,7 @@ const con = mysql.createConnection({
 });
 
 router.get('/', (req, res) => {
-    res.render('login', '');
+    res.render('login', { message: 'ログイン情報を入力' });
 });
 
 router.post('/', (req, res) => {
@@ -24,27 +24,30 @@ router.post('/', (req, res) => {
     con.query(sql, [req.body.email], (error, results) => {
         if (error) {
             console.log(error);
-            return res.status(401).send('ログインエラー：DBエラー');
+            return res.render('login', { message: 'ログインエラー：DBエラー' });
         }
 
         // ユーザーが見つからなかった場合
-        if (results == '') {
-            return res.status(401).send('ログインエラー：ユーザーが見つかりません');
+        if (results.length === 0) {
+            return res.render('login', { message: '認証に失敗しました メールアドレスまたはパスワードに誤りがあります' });
         }
 
         // 入力されたパスワードとDBのパスワードを比較
         bcrypt.compare(req.body.password, results[0].passwd, (err, result) => {
             // パスワード不一致の場合
             if (err) {
-                return res.status(401).send('ログインエラー：認証エラー');
+                return res.render('login', { message: '認証に失敗しました サーバーエラー' });
             }
 
             if (!result) {
-                return res.status(401).send('ログインエラー：パスワードが間違っています');
+                return res.render('login', { message: '認証に失敗しました メールアドレスまたはパスワードに誤りがあります' });
             }
 
-            console.log('認証成功:' + results[0].username);
-            const payload = { user: results[0].username };
+            console.log('認証成功:' + results[0].email);
+            const payload = {
+                user: results[0].username,
+                email: results[0].email
+            };
             const option = { expiresIn: '12h' };
             const token = jwt.sign(payload, secretKey, option);
 

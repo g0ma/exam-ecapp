@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,33 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>ログイン</title>
 </head>
+
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <div class="container">
+        <div class="row">
+            <h1 class="h3 mb-3 fw-normal">ログイン</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <%= message %>
+                </p>
+            </div>
+        </div>
         <div class="form-signin w-100 m-auto">
             <form action="/login" method="post">
-                <h1 class="h3 mb-3 fw-normal">ログイン</h1>
                 <div class="form-floating">
-                    <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="email" name="email" class="form-control" id="floatingInput"
+                        placeholder="name@example.com">
                     <label for="floatingInput">メールアドレス</label>
-                  </div>
-                  <div class="form-floating">
-                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="パスワード">
+                </div>
+                <div class="form-floating">
+                    <input type="password" name="password" class="form-control" id="floatingPassword"
+                        placeholder="パスワード">
                     <label for="floatingPassword">パスワード</label>
                     <p><a href="./register">アカウント作成はこちら</a></p>
                     <button class="btn btn-primary w-100 py-2" type="submit">ログイン</button>
-                  </div>
+                </div>
             </form>
         </div>
     </div>
@@ -29,4 +42,5 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
