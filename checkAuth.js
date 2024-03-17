@@ -23,6 +23,15 @@ function LoginChk(cookie) {
     return userInfo;
   }
 
+  function chkLoggedin(name) {
+    if (name != 'ゲスト') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   module.exports = {
-    LoginChk: LoginChk
+    LoginChk: LoginChk,
+    chkLoggedin: chkLoggedin
   };

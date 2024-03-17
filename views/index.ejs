@@ -22,12 +22,16 @@
 <body>
     <div class="container">
         <header class="row flex-wrap py-3 mb-4 border-bottom">
-            <div class="col-md-3 text-first">
-                <h3><%= title %></h3>
+            <div class="col-md-6 text-first">
+                <h3>
+                    <%= title %>
+                </h3>
             </div>
-            <div class="col-md-9 text-end">
+            <div class="col-md-6 text-end">
                 <a class="btn btn-primary" href="/cart">カート</a>
-                <a class="btn btn-outline-primary" href="/login">ログイン</a> <!--ログインしたらようこそ〇〇さんに切り替える-->
+                <% if (!isLoggedin) {%>
+                    <a class="btn btn-outline-primary" href="/login">ログイン</a> <!--ログインしたらようこそ〇〇さんに切り替える-->
+                    <%}%>
             </div>
         </header>
 

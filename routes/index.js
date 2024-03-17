@@ -11,9 +11,11 @@ router.get('/', function (req, res, next) {
     if (err) {
       return res.status(401).send('DBエラー');;
     }
+
     var items = {
       title: 'こんにちは！' + loginUser.name + 'さん',
-      content: results
+      content: results,
+      isLoggedin: chkAuth.chkLoggedin(loginUser.name)
     }
 
     res.render('index', items);
@@ -21,15 +23,17 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/search', function (req, res) {
+  const loginUser = chkAuth.LoginChk(req.cookies.token);
   const word = req.query.search;
-  var con = Select_Db();
+  var con = dbCon.Select_Db();
   con.query('SELECT * FROM products WHERE itemname LIKE ?', ['%' + word + '%'], function (error, results, fields) {
     if (error) {
       res.status(502).send('サーバーエラー\r\n' + error.message);
     }
     var result = {
       title: word + 'の検索結果',
-      content: results
+      content: results,
+      isLoggedin: chkAuth.chkLoggedin(loginUser.name)
     };
     res.render('index', result);
   });
