@@ -19,8 +19,11 @@
         <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded-3 mx-2">
                 <h2><%= result.itemname %></h2>
-                <p>価格：<%= result.itemprice %>円</p>
+                <p>価格：<%= Math.round(result.itemprice).toLocaleString() %>円</p>
                 <p><%= result.description %></p>
+                <form action="/cart" method="post">
+                    <input type="hidden" name="itemcd" id="" value="<%= result.itemcd %>" />
+                </form>
                 <button class="w-100 btn btn-info">カートに入れる</button>
             </div>
         </div>
