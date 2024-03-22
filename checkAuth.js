@@ -5,7 +5,6 @@ const env = process.env;
 
 // Cookieからログイン情報を取得する
 function LoginChk(cookie) {
-    console.log('cookie_hashed: ' + cookie);
     var userInfo = {
       name :'ゲスト',
       email: ''
@@ -14,9 +13,8 @@ function LoginChk(cookie) {
       const decode = jwt.verify(cookie, env.CK_SECKEY);
       userInfo = {
         name: decode.user,
-        emaill: decode.email
+        email: decode.email
       };
-      console.log('logged in ' + userInfo.name);
     } catch {
       console.log('not login');
     }

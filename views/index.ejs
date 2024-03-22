@@ -73,7 +73,7 @@
                     <a href="/products?pid=<%= data.itemcd %>">
                         <div class="col">
                             <div class="card shadow-sm">
-                                <img class="bd-placeholder-img card-img-top" src="<%= data.filepath %>" max-height="225"
+                                <img class="bd-placeholder-img card-img-top h-100" src="<%= data.filepath %>" max-height="225"
                                     alt="">
 
                                 <div class="card-body">
@@ -85,9 +85,6 @@
                                         <font color="#CB1B45">
                                             <%= Math.round(data.itemprice).toLocaleString() %>円
                                         </font>
-                                    </p>
-                                    <p>
-                                        <%= data.description %>
                                     </p>
                                 </div>
                             </div>

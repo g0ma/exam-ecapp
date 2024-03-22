@@ -3,6 +3,7 @@ var chkAuth = require('../checkAuth');
 var dbCon = require('../DBConInfo');
 var router = express.Router();
 
+// トップページ（商品一覧の表示）
 router.get('/', function (req, res, next) {
   const loginUser = chkAuth.LoginChk(req.cookies.token);
   var con = dbCon.Select_Db();
@@ -22,6 +23,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
+// キーワード検索で絞り込んだ商品の一覧を表示する
 router.get('/search', function (req, res) {
   const loginUser = chkAuth.LoginChk(req.cookies.token);
   const word = req.query.search;

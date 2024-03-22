@@ -1,11 +1,13 @@
 const express = require('express');
 const multer = require('multer');
 const uuid = require('uuid');
-const mysql = require('mysql2');
 var dbCon = require('../DBConInfo');
 const router = express.Router();
 
-// ファイルアップロード用の情報
+
+const con = dbCon.Select_Db();
+
+// 商品画像アップロード用の情報
 const storage = multer.diskStorage({
     destination: './public/files/',
     filename: (req, file, cb) => {
@@ -16,12 +18,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// 管理者メニューの表示
 router.get('/', (req, res, next) => {
     res.render('admin', '');
 });
 
+// 商品一覧の表示
 router.get('/product-manage', (req, res, next) => {
-    var con = dbCon.Select_Db();
     const sql = 'SELECT * FROM products;';
     con.query(sql, (err, results) => {
         if (err) {
@@ -40,13 +43,11 @@ router.get('/product-manage/add', (req, res, next) => {
     res.render('product-manage-add', { title: '商品情報を追加' });
 });
 
-// 要求された商品情報追加の処理
+// 商品情報の追加
 router.post('/product-manage/add', upload.single('image'), (req, res) => {
     const { itemcd, itemName, itemPrice, Description } = req.body;
     const image = '/files/' + req.file.filename;
     console.log(image + 'のアップロードが完了しました。');
-    var con = dbCon.Select_Db();
-    // 商品情報 INSERT
     const sql = `
     INSERT INTO products (itemcd, itemname, itemprice, description, filepath)
     VALUES (?, ?, ?, ?, ?)`;
@@ -62,5 +63,32 @@ router.post('/product-manage/add', upload.single('image'), (req, res) => {
     res.end();
 
 });
+
+// 商品情報の削除
+router.post('/product-manage/delete', (req, res) => {
+    const cd = req.body.delcd;
+    const sql = 'DELETE FROM products WHERE itemcd = ?';
+    con.query(sql, cd, (err, result) => {
+        if(err) {
+            console.log(err);
+            res.status(500).send('削除エラー');
+        }
+    });
+    res.writeHead(301, { Location: '/admin/product-manage' });
+    res.end();
+});
+
+// ユーザーアカウントの一覧表示
+router.get('/customer-manage', function (req, res, next) {
+  const sql = 'SELECT username, email, zip, address FROM customer;';
+  con.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.render('customer-manage', { title: 'アカウント一覧', customer: results });
+  });
+});
+
+// 商品削除の処理を例にアカウントの削除を追加する
 
 module.exports = router;

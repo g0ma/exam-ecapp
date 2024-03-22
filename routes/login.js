@@ -3,17 +3,12 @@ const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+var dbCon = require('../DBConInfo');
 const env = process.env;
 const secretKey = env.CK_SECKEY;
 const router = express.Router();
 
-// MySQLの接続情報
-const con = mysql.createConnection({
-    host: env.DB_HOST,
-    user: env.DB_USER,
-    password: env.DB_PASSWORD,
-    database: env.DB_DATABASE
-});
+const con = dbCon.Select_Db();
 
 router.get('/', (req, res) => {
     res.render('login', { message: 'ログイン情報を入力' });

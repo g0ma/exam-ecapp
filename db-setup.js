@@ -49,6 +49,12 @@ function CreateDB() {
         }
         console.log('productsテーブルが作成されました');
     });
+
+    /*CREATE TABLE exam_ec.itemcart (
+  userid VARCHAR(255) NOT NULL,
+  itemcd VARCHAR(8) NOT NULL,
+  quantity INT NOT NULL
+) CHARACTER SET utf8; */
 }
 
 module.exports = {

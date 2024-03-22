@@ -1,32 +1,46 @@
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe')('sk_test_51OjLLCCquV7OPeZpqxsUa5CcDkSHaV5B1Ec9uOGcc0EyB2AuvbFim94V5kWljF17zHP42gElTRtZoCxTjhoiegzK009FIzI7Rk');
+var chkAuth = require('../checkAuth');
+var dbCon = require('../DBConInfo');
+require('dotenv').config();
+const env = process.env;
+const stripe = require('stripe')(env.STRIPE_API);
 const YOUR_DOMAIN = 'http://localhost:3000';
 
-router.get('/', (req, res, next) => {
-    res.render('cart', '');
+const con = dbCon.Select_Db();
+
+// DBからカート情報を取得してカートに入っている商品を表示する
+router.get('/', (req, res) => {
+  const sql = 'SELECT * FROM ';
+
+  con.query(sql, (err, results) => {
+    if (err) {
+      return res.render('login', { message: 'カート取得エラー：DBエラー' });
+    }
+    res.render('cart', { title: "ショッピングカート", 'content': results });
+  });
 });
 
 // checkout→カート情報を基にStripeで決済を行う
 router.post('/checkout', async function (req, res) {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: 'jpy',
-            product_data: {
-              name: '波乗りジョニー',
-            },
-            unit_amount: 1820,
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          currency: 'jpy',
+          product_data: {
+            name: '波乗りジョニー',
           },
-          quantity: 2,
+          unit_amount: 1820,
         },
-      ],
-      mode: 'payment',
-      success_url: 'http://localhost:3000/',
-      cancel_url: 'http://localhost:3000/cart',
-    });
-    
+        quantity: 2,
+      },
+    ],
+    mode: 'payment',
+    success_url: 'http://localhost:3000/',
+    cancel_url: 'http://localhost:3000/cart',
+  });
+
   res.redirect(303, session.url);
 });
 module.exports = router;
