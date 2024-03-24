@@ -90,9 +90,9 @@ router.get('/customer-manage', function (req, res, next) {
 });
 
 // ユーザーアカウントの削除
-router.post('/customer-manage/delete', function (req, res) {
+router.post('/customer-manage/delete', (req, res) => {
     const cd = req.body.delcd;
-    const sql = 'DELETE FROM customer WHERE email = ?';
+    const sql = 'DELETE FROM customer WHERE email = ?;';
     con.query(sql, cd, (err, result) => {
         if(err) {
             console.log(err);

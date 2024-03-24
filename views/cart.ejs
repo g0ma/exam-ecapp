@@ -47,7 +47,7 @@
                   <td>
                     <form action="/cart/delete" method="post">
                       <input type="hidden" name="itemcd" value="<%= data.itemcd %>">
-                      <button>カートから削除</button>
+                      <button class="btn btn-warning">カートから削除</button>
                     </form>
                   </td>
                 </tr>
@@ -55,7 +55,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 p-3 bg-light border rounded-3 h-100">
         <h2>合計<%= amount.toLocaleString() %>円</h2>
         <form action="/cart/checkout" method="POST">
           <input type="hidden" name="totalamount" value="<%= amount %>" id="">
