@@ -13,9 +13,8 @@
   <div class="container">
     <header class="row flex-wrap py-3 mb-3 border-bottom">
       <div class="col-md-6 text-first">
-        <h3>
-          <%= title %>
-        </h3>
+        <h3><%= title %></h3>
+        <p><%= info %></p>
       </div>
     </header>
     <div class="row">
@@ -25,29 +24,42 @@
       <div class="col-md-6">
         <table class="table">
           <thead>
-            <td>商品画像</td>
-            <td>アイテム名</td>
-            <td>価格</td>
+            <tr>
+              <td>商品画像</td>
+              <td>アイテム名</td>
+              <td>価格</td>
+              <td>操作</td>
+            </tr>
           </thead>
           <tbody>
             <% for (var c in content) { %>
               <% var data=content[c] %>
-              <td>
-                  <img src="<%= data.filepath %>" style="max-width: 120px;" alt="">
-              </td>
-                <td class="align-middle">
-                  <%= data.itemname %>
-                </td>
-                <td class="align-middle text-end">
-                  <%= Math.round(data.itemprice).toLocaleString() %>円
-                </td>
+                <tr>
+                  <td>
+                    <img src="<%= data.filepath %>" style="max-width: 120px;" alt="">
+                  </td>
+                  <td class="align-middle">
+                    <%= data.itemname %>
+                  </td>
+                  <td class="align-middle text-end">
+                    <%= Math.round(data.itemprice).toLocaleString() %>円
+                  </td>
+                  <td>
+                    <form action="/cart/delete" method="post">
+                      <input type="hidden" name="itemcd" value="<%= data.itemcd %>">
+                      <button>カートから削除</button>
+                    </form>
+                  </td>
+                </tr>
                 <% } %>
           </tbody>
         </table>
       </div>
       <div class="col-md-6">
+        <h2>合計<%= amount.toLocaleString() %>円</h2>
         <form action="/cart/checkout" method="POST">
-          <button type="submit" id="checkout-button">Checkout</button>
+          <input type="hidden" name="totalamount" value="<%= amount %>" id="">
+          <button class="btn btn-info" type="submit" id="checkout-button">決済へ進む</button>
         </form>
       </div>
     </div>

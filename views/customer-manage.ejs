@@ -51,7 +51,7 @@
                   <%= account.address %>
                 </td>
                 <td>
-                  <form action="/customer-manage/delete">
+                  <form action="/admin/customer-manage/delete" method="post">
                     <input type="hidden" name="delcd" value="<%= account.email %>" />
                     <button class="btn btn-danger" type="submit" id="delConfirm">削除</button>
                   </form>

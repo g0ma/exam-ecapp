@@ -20,7 +20,7 @@ const upload = multer({ storage });
 
 // 管理者メニューの表示
 router.get('/', (req, res, next) => {
-    res.render('admin', '');
+    res.render('admin', {title: '管理メニュー'});
 });
 
 // 商品一覧の表示
@@ -39,7 +39,7 @@ router.get('/product-manage', (req, res, next) => {
     });
 });
 
-router.get('/product-manage/add', (req, res, next) => {
+router.get('/product-manage/add', (req, res) => {
     res.render('product-manage-add', { title: '商品情報を追加' });
 });
 
@@ -65,7 +65,7 @@ router.post('/product-manage/add', upload.single('image'), (req, res) => {
 });
 
 // 商品情報の削除
-router.post('/product-manage/delete', (req, res) => {
+router.post('/product-manage/delete', function (req, res) {
     const cd = req.body.delcd;
     const sql = 'DELETE FROM products WHERE itemcd = ?';
     con.query(sql, cd, (err, result) => {
@@ -89,6 +89,18 @@ router.get('/customer-manage', function (req, res, next) {
   });
 });
 
-// 商品削除の処理を例にアカウントの削除を追加する
+// ユーザーアカウントの削除
+router.post('/customer-manage/delete', function (req, res) {
+    const cd = req.body.delcd;
+    const sql = 'DELETE FROM customer WHERE email = ?';
+    con.query(sql, cd, (err, result) => {
+        if(err) {
+            console.log(err);
+            res.status(500).send('削除エラー');
+        }
+    });
+    res.writeHead(301, { Location: '/admin/customer-manage' });
+    res.end();
+});
 
 module.exports = router;

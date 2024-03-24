@@ -1,18 +1,19 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const mysql = require('mysql2');
 var dbCon = require('../DBConInfo');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-    res.render('register', '');
+// 情報入力フォームの表示
+router.get('/', (req, res) => {
+    res.render('register', {title: '会員情報を登録'});
 });
 
-const con = dbCon.Select_Db();
 
+// 入力された情報を基にアカウント情報をDBへ登録
 router.post('/', (req, res) => {
     const { username, email, passwd, zipCode, address } = req.body;
     let hashed_password = bcrypt.hashSync(passwd, 10);
+    const con = dbCon.Select_Db();
 
     //登録情報をDBへINSERT
     const sql = `INSERT INTO customer (username, email, zip, address, passwd)
@@ -24,7 +25,7 @@ router.post('/', (req, res) => {
             return;
         }
     });
-    con.end();
+    // 登録後にログインページへ遷移
     res.writeHead(301, { Location: '/login' });
     res.end();
 });

@@ -1,16 +1,11 @@
 const express = require('express');
-const mysql = require('mysql2');
 var dbCon = require('../DBConInfo');
 var chkAuth = require('../checkAuth');
 const router = express.Router();
 
-// 環境情報の読み込み
-require('dotenv').config();
-const env = process.env;
-
-// MySQLの接続情報
-
-router.get('/', (req, res, next) => {
+// 選択された商品の情報を表示する
+router.get('/', (req, res) => {
+    const loginUser = chkAuth.LoginChk(req.cookies.token);
     var cd = req.query.pid;
     var con = dbCon.Select_Db();
     const sql = 'SELECT * FROM products WHERE itemcd = ?;';
@@ -19,12 +14,18 @@ router.get('/', (req, res, next) => {
             console.log('DB ACCESS ERROR');
             return;
         }
-        console.log('succcess' + row[0].itemcd);
+        const items = {
+            title: `${row[0].itemname} - 商品情報`,
+            isLoggedin: chkAuth.chkLoggedin(loginUser.name),
+            info: 'こんにちは！' + loginUser.name + 'さん',
+            result: row[0]
+        };
 
-        res.render('products', { title: `${row[0].itemname} - 商品情報`, result: row[0] });
+        res.render('products', items);
     });
 });
 
+// 表示中の商品をカートに追加する
 router.post('/addcart', (req, res) => {
     console.log('addcart処理');
     const itemcd = req.body.itemcd;
@@ -48,13 +49,6 @@ router.post('/addcart', (req, res) => {
         res.writeHead(301, { Location: '/cart' });
         res.end();
     });
-
-    /*
-    itemcartテーブル
-    userid(ユーザーのメールアドレス)
-    itemcd(商品コード)
-    quantity(数量)
-     */
 });
 
 module.exports = router;
