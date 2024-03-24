@@ -22,7 +22,7 @@
 <body>
     <div class="container">
         <%- include('_header') %>
-        <div class="row">
+        <div class="row mb-5">
             <form class="d-flex" method="get" action="/search">
                 <div class="col-auto">
                     <label class="mt-2 mx-2">キーワード検索</label>
@@ -35,6 +35,7 @@
                 </div>
             </form>
         </div>
+        <!--
         <form class="d-flex" action="/price" method="get">
             <div class="row mt-2 mb-5 g-1">
                 <div class="col-auto">
@@ -54,6 +55,7 @@
                 </div>
             </div>
         </form>
+        -->
         <div class="row row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <% for (var c in content) { %>
                 <% var data=content[c] %>

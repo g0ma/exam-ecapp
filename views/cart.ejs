@@ -44,7 +44,7 @@
                   <td class="align-middle text-end">
                     <%= Math.round(data.itemprice).toLocaleString() %>円
                   </td>
-                  <td>
+                  <td class="align-middle">
                     <form action="/cart/delete" method="post">
                       <input type="hidden" name="itemcd" value="<%= data.itemcd %>">
                       <button class="btn btn-warning">カートから削除</button>

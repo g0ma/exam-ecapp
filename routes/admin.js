@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const uuid = require('uuid');
 var dbCon = require('../DBConInfo');
+var chkAuth = require('../checkAuth');
 const router = express.Router();
 
 
@@ -20,7 +21,13 @@ const upload = multer({ storage });
 
 // 管理者メニューの表示
 router.get('/', (req, res, next) => {
-    res.render('admin', {title: '管理メニュー'});
+    // TODO ログインチェックを応用した管理者認証を実装する
+    const usr = chkAuth.LoginChk(req.cookies.token);
+    console.log(usr.email);
+    if (usr.email != 'admin@example.com') {
+        return res.status(403).send('権限がありません');
+    }
+    res.render('admin', { title: '管理メニュー' });
 });
 
 // 商品一覧の表示
@@ -69,7 +76,7 @@ router.post('/product-manage/delete', function (req, res) {
     const cd = req.body.delcd;
     const sql = 'DELETE FROM products WHERE itemcd = ?';
     con.query(sql, cd, (err, result) => {
-        if(err) {
+        if (err) {
             console.log(err);
             res.status(500).send('削除エラー');
         }
@@ -80,13 +87,13 @@ router.post('/product-manage/delete', function (req, res) {
 
 // ユーザーアカウントの一覧表示
 router.get('/customer-manage', function (req, res, next) {
-  const sql = 'SELECT username, email, zip, address FROM customer;';
-  con.query(sql, (err, results) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.render('customer-manage', { title: 'アカウント一覧', customer: results });
-  });
+    const sql = 'SELECT username, email, zip, address FROM customer;';
+    con.query(sql, (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.render('customer-manage', { title: 'アカウント一覧', customer: results });
+    });
 });
 
 // ユーザーアカウントの削除
@@ -94,7 +101,7 @@ router.post('/customer-manage/delete', (req, res) => {
     const cd = req.body.delcd;
     const sql = 'DELETE FROM customer WHERE email = ?;';
     con.query(sql, cd, (err, result) => {
-        if(err) {
+        if (err) {
             console.log(err);
             res.status(500).send('削除エラー');
         }

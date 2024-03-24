@@ -3,12 +3,15 @@
         <h3>
             <%= title %>
         </h3>
-        <p class="mb-0"><%= info %></p>
+        <p class="mb-0">
+            <%= info %>
+        </p>
     </div>
     <div class="col-md-6 text-end">
-        <a class="btn btn-primary" href="/cart">カート</a>
         <% if (!isLoggedin) {%>
             <a class="btn btn-outline-primary" href="/login">ログイン</a> <!--ログインしたらようこそ〇〇さんに切り替える-->
-            <%}%>
+            <% } else { %>
+                <a class="btn btn-primary" href="/cart">カート</a>
+                <% } %>
     </div>
 </header>
