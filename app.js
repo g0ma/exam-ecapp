@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 
+var dbSetup = require('./db-setup');
+dbSetup.CreateDB();
+
 // routerをここへまとめておく
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');

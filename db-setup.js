@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-var dbCon = require('../DBConInfo');
+var dbCon = require('./DBConInfo');
 // MySQL接続情報
 const connection = dbCon.Select_Db();
 function CreateDB() {
