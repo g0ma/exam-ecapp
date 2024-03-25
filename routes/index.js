@@ -41,4 +41,14 @@ router.get('/search', (req, res) => {
   });
 });
 
+router.get('/logout', (req, res) => {
+  console.log('loguout...');
+  res.clearCookie('token');
+  res.redirect('/');
+});
+
+router.get('/thanks', (req, res) => {
+  res.render('thanks', { title: '注文完了' });
+});
+
 module.exports = router;

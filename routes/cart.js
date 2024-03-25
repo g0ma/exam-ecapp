@@ -41,11 +41,11 @@ router.post('/delete', (req, res) => {
   const sql = 'DELETE FROM itemcart WHERE userid = ? AND itemcd = ?;';
 
   con.query(sql, [loginUser.email, itemcd], (err, result) => {
-    if(err) {
-        console.log(err);
-        res.status(500).send('削除エラー');
+    if (err) {
+      console.log(err);
+      res.status(500).send('削除エラー');
     }
-});
+  });
   res.writeHead(301, { Location: '/cart' });
   res.end();
 });
@@ -68,13 +68,32 @@ router.post('/checkout', async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/complete',
+
+      success_url: 'http://localhost:3000/cart/complete',
       cancel_url: 'http://localhost:3000/cart'
+      // success_url: 'https://ec.halu.ink/complete',
+      // cancel_url: 'https://ec.halu.ink/cart'
     });
     res.redirect(303, session.url);
   } catch (e) {
     res.status(500).send(e);
   }
+});
+
+router.get('/complete', (req, res) => {
+  const loginUser = chkAuth.LoginChk(req.cookies.token);
+  var con = dbCon.Select_Db();
+
+  // 注文履歴に記録→削除にする
+  const sql = 'DELETE FROM itemcart WHERE userid = ?';
+  con.query(sql, loginUser.email, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send('削除エラー');
+    }
+  });
+  res.writeHead(301, { Location: '/thanks' });
+  res.end();
 });
 
 module.exports = router;

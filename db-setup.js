@@ -1,10 +1,7 @@
 const mysql = require('mysql2');
+var dbCon = require('../DBConInfo');
 // MySQL接続情報
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '20240222'
-});
+const connection = dbCon.Select_Db();
 function CreateDB() {
 
     // MySQL接続
@@ -55,6 +52,14 @@ function CreateDB() {
         'itemcd VARCHAR(8) NOT NULL, ' +
         'quantity INT NOT NULL ' +
         ') CHARACTER SET utf8; ';
+
+    connection.query(sql, (err, result) => {
+        if (err) {
+            console.error('itemcartテーブル作成エラー:', err);
+            throw err;
+        }
+        console.log('itemcartテーブルが作成されました');
+    });
 }
 
 module.exports = {
